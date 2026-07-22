@@ -13,6 +13,7 @@
 // Seller extends Person
 // companyName
 // sellerRating
+
 // Product
 // productid
 // productName
@@ -92,9 +93,91 @@ class Person {
 }
 
 class Customer extends Person{
+    String city;
+    boolean isPrimeMember;
+
+    public Customer(int id, String name, String email, String city,boolean isPrimeMember){
+        super(id,name,email);
+        this.city=city;
+        this.isPrimeMember=isPrimeMember;
+    }
+
+    public String getCity(){
+        return city;
+    }
+
+    public boolean hasPremium(){
+        return isPrimeMember;
+    }
 
 }
 
+class Seller extends Person{
+    String companyName;
+    double sellerRating;
+
+    public Seller(int id, String name, String email, String companyName,double sellerRating){
+        super(0,"","");
+        this.companyName=companyName;
+        this.sellerRating=sellerRating;
+    }
+
+    public String getCompanyName(){
+        return companyName;
+    }
+
+    public double getSellerRating(){
+        return sellerRating;
+    }
+}
+
+class Product{
+    int productId;
+    String productName;
+    String category;
+    int price;
+    double rating;
+    boolean inStock;
+    Seller seller;
+
+    public Product(int productId, String productName, String category, int price, double rating, boolean inStock, Seller seller){
+        this.productId=productId;
+        this.productName=productName;
+        this.category=category;
+        this.price=price;
+        this.rating=rating;
+        this.inStock=inStock;
+        this.seller=seller;
+    }
+
+    public int getProductId(){
+        return productId;
+    }
+
+    public String getProductName(){
+        return productName;
+    }
+
+    public String getCategory(){
+        return category;
+    }
+
+    public int getPrice(){
+        return price;
+    }
+
+    public double getRating(){
+        return rating;
+    }
+
+    public boolean isInStock(){
+        return inStock;
+    }
+
+    public Seller getSeller(){
+        return seller;
+    }
+}
 
 public class OnlineShoppingSystem {
     public static void main(String[] args) {
@@ -141,5 +224,28 @@ public class OnlineShoppingSystem {
         products.add(product7);
         products.add(product8);
 
+
+        // Display all product names
+        System.out.println("All product names:- ");
+        products.stream().forEach(x->System.out.println(x.getProductName()));
+
+        // Display all products that are in stock
+        System.out.println("\nNames of products who are in stock:- ");
+        products.stream().filter(x-> x.isInStock()).forEach(x->System.out.println(x.getProductName()));
+
+        // Find products costing more than 1000
+        System.out.println("\nProducts costing more than 1000: ");
+        products.stream().filter(x->x.getPrice()>1000).forEach(x->System.out.println(x.getProductName()));
+
+        // Find all Prime customers
+        System.out.println("\nPremium Customers:- ");
+        customers.stream().filter(x->x.hasPremium()).forEach(x->System.out.println(x.getName()));
+
+
+        // Find sellers with rating above 4.5
+        System.out.println("\nSellers with rating above 4.5:- ");
+        sellers.stream().filter(x->x.getSellerRating()>4.5).forEach(x->System.out.println(x.getName()));
+
+        // 
     }
 }
